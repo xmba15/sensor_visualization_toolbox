@@ -21,7 +21,7 @@ class LidarCameraVisualizationHandler:
             CameraInfo.from_json(json_info_path), RigidTransformation.from_json(json_info_path)
         )
 
-    def project_point_cloud_on_image(self, image_path: str, cloud_path: str):
+    def _project_point_cloud(self, image_path: str, cloud_path: str):
         image = cv2.imread(image_path)
         assert image is not None, f"failed to load {image_path}"
 
@@ -49,11 +49,25 @@ class LidarCameraVisualizationHandler:
         )
         projected_points = projected_points[keep_condition]
         xyz = xyz[keep_condition]
+
+        return image, projected_points, xyz
+
+    def project_point_cloud_on_image(self, image_path: str, cloud_path: str):
+        image, projected_points, xyz = self._project_point_cloud(image_path, cloud_path)
         colors = [np.array(self._cmap((int(point[0] % 20) / 20.0))) * 255 for point in xyz]
 
         [
-            cv2.circle(image, point, radius=1, color=color, thickness=-1)
+            cv2.circle(image, tuple(point), radius=1, color=color, thickness=-1)
             for (point, color) in zip(projected_points, colors)
         ]
 
         return image
+
+    def colorize_point_cloud(self, image_path: str, cloud_path):
+        image, projected_points, xyz = self._project_point_cloud(image_path, cloud_path)
+        colors = np.array([list(image[:, :, ::-1][y, x]) for (x, y) in projected_points])
+        pcd = o3d.geometry.PointCloud()
+        pcd.points = o3d.utility.Vector3dVector(xyz)
+        pcd.colors = o3d.utility.Vector3dVector(colors.astype(np.float64) / 255.0)
+
+        return pcd

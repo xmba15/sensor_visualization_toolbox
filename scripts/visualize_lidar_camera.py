@@ -4,6 +4,7 @@ import os
 import sys
 
 import cv2
+import open3d as o3d
 
 _CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(_CURRENT_DIR, "../"))
@@ -26,6 +27,11 @@ def main():
     projected_image = lidar_camera_visualizer.project_point_cloud_on_image(args.image_path, args.cloud_path)
     assert projected_image is not None
     cv2.imwrite("test.png", projected_image)
+
+    pcd = lidar_camera_visualizer.colorize_point_cloud(args.image_path, args.cloud_path)
+
+    o3d.io.write_point_cloud("output.pcd", pcd, write_ascii=True)
+    o3d.visualization.draw_geometries([pcd])
 
 
 if __name__ == "__main__":

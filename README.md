@@ -21,6 +21,22 @@ conda activate sensor_visualization_toolbox
 ## :running: How to Run ##
 ***
 
+- project point cloud to image and colorize point cloud: the pairs of pcds and images are downloaded from [HERE](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d)
+```bash
+python scripts/visualize_lidar_camera.py --json_info_path ./data/samples/data_info.json --image_path ./data/samples/000000.png --cloud_path ./data/samples/000000.pcd
+```
+
+<table width="100%">
+    <tr>
+        <td width="50%" align="center">project point cloud to image</td>
+        <td width="50%" align="center">colorize point cloud</td>
+    </tr>
+    <tr>
+        <td width="50%" align="center"><img src="./docs/images/point_cloud_to_image.jpg"/></td>
+        <td width="50%" align="center"><img src="./docs/images/colorized_point_cloud.jpg"</td>
+    </tr>
+</table>
+
 ## :gem: References ##
 ***
 
