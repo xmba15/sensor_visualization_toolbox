@@ -5,7 +5,7 @@ from typing import Generic, TypeVar
 import cv2
 import numpy as np
 
-__all__ = ["Array", "CameraInfo"]
+__all__ = ["Array", "CameraInfo", "RigidTransformation"]
 
 
 Shape = TypeVar("Shape")
@@ -95,4 +95,4 @@ class RigidTransformation:
         with open(json_info_path, "r") as f:
             data = json.load(f)
             assert rotation_mat_key in data and translation_vec_key in data
-        return RigidTransformation(np.array(data[rotation_mat_key]), data[translation_vec_key])
+        return RigidTransformation(np.array(data[rotation_mat_key]), np.array(data[translation_vec_key]))
