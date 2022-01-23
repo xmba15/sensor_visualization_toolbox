@@ -8,7 +8,9 @@ Currently, data from Kitti dataset will be used to test the functionality of thi
 ## :tada: TODO ##
 ***
 
-- [ ] lidar(point cloud) and camera
+- [x] lidar(point cloud) and camera
+- [x] 3d bounding box on image
+- [ ] 3d bounding box on point cloud and bev
 
 ## 🎛  Dependencies ##
 ***
@@ -34,6 +36,18 @@ python scripts/visualize_lidar_camera.py --json_info_path ./data/samples/data_in
     <tr>
         <td width="50%" align="center"><img src="./docs/images/point_cloud_to_image.jpg"/></td>
         <td width="50%" align="center"><img src="./docs/images/colorized_point_cloud.jpg"</td>
+    </tr>
+</table>
+
+- draw 3d object on image
+```bash
+python scripts/draw_object3d_on_image.py -l ./data/samples/000122.txt -j ./data/samples/data_info.json -i ./data/samples/000122.png
+```
+
+<table width="100%">
+    <tr>
+        <td width="50%" align="center"><img src="./docs/images/3d_bbox_000074.jpg"/></td>
+        <td width="50%" align="center"><img src="./docs/images/3d_bbox_000146.jpg"</td>
     </tr>
 </table>
 
